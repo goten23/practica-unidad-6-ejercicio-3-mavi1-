@@ -1,0 +1,43 @@
+import pygame
+import sys
+
+# Inicializar pygame
+pygame.init()
+
+# Configuración de la ventana
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Bounce")
+
+# Colores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Variables de movimiento
+x = screen_width // 2
+y = 0
+velocity_y = 0
+gravity = 0.1
+bounce_factor = -0.8
+
+# Bucle principal
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Aplicar gravedad
+    velocity_y += gravity
+    y += velocity_y
+
+    # Verificar colisión con el suelo
+    if y >= screen_height - 20:
+        y = screen_height - 20
+        velocity_y *= bounce_factor
+
+    # Dibujar en pantalla
+    screen.fill(WHITE)
+    pygame.draw.circle(screen, BLACK, (x, int(y)), 20)
+    pygame.display.flip()
